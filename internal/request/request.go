@@ -12,6 +12,7 @@ import (
 type parserState string
 const (
 	StateInit parserState = "init"
+	StateHeaders parserState = "headers"
 	StateDone parserState = "done"
 	StateError parserState = "error"
 )
@@ -25,6 +26,7 @@ type RequestLine struct {
 
 type Request struct {
 	RequestLine RequestLine
+	Headers Headers
 	state parserState
 }
 
@@ -92,9 +94,14 @@ outer:
 			read += n
 
 			r.state = StateDone
+
+		case StateHeader:
+			
 			
 		case StateDone:
 			break outer
+		default:
+			panic("MASSIVE ISSUE")
 		}
 	}
 	return read, nil
