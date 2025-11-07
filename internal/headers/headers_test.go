@@ -13,8 +13,10 @@ func TestHeaderParse(t *testing.T){
 	n, done, err := headers.Parse(data)
 	require.NoError(t, err)
 	require.NotNil(t, headers)
-	require.Equal(t, "localhost:42069", headers.Get("Host"))
-	require.Equal(t, "Bar", headers.Get("Foo"))
+	host, _:= headers.Get("Host")
+	require.Equal(t, "localhost:42069", host)
+	foo, _ := headers.Get("Foo")
+	require.Equal(t, "Bar", foo)
 	require.Equal(t, 34, n)
 	require.True(t, done)
 
@@ -25,7 +27,8 @@ func TestHeaderParse(t *testing.T){
 	n, done, err = headers.Parse(data)
 	require.NoError(t, err)
 	require.NotNil(t, headers)
-	require.Equal(t, "localhost:42069,localhost:42069", headers.Get("Host"))
+	host, _ = headers.Get("Host")
+	require.Equal(t, "localhost:42069,localhost:42069", host)
 	require.True(t, done)
 
 
